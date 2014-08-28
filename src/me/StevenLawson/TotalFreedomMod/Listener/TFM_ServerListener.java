@@ -52,6 +52,7 @@ public class TFM_ServerListener implements Listener
     public void onServerPing(ServerListPingEvent event)
     {
         final String ip = event.getAddress().getHostAddress();
+        event.setMotd(ChatColor.RED + "**" + ChatColor.DARK_GRAY + "****" + ChatColor.RED + "** " + ChatColor.DARK_GRAY + "PacksFreedom - Minecraft 1.7 " + ChatColor.RED + "**" + ChatColor.DARK_GRAY + "****" + ChatColor.RED + "**");
 
         if (TFM_BanManager.isIpBanned(ip))
         {
@@ -76,22 +77,5 @@ public class TFM_ServerListener implements Listener
             event.setMotd(ChatColor.RED + "Server is full.");
             return;
         }
-
-        if (!TFM_ConfigEntry.SERVER_COLORFUL_MOTD.getBoolean())
-        {
-            event.setMotd(TFM_Util.colorize(TFM_ConfigEntry.SERVER_MOTD.getString()
-                    .replace("%mcversion%", TFM_ServerInterface.getVersion())));
-            return;
-        }
-        // Colorful MOTD
-
-        final StringBuilder motd = new StringBuilder();
-
-        for (String word : TFM_ConfigEntry.SERVER_MOTD.getString().replace("%mcversion%", TFM_ServerInterface.getVersion()).split(" "))
-        {
-            motd.append(TFM_Util.randomChatColor()).append(word).append(" ");
-        }
-
-        event.setMotd(TFM_Util.colorize(motd.toString()));
     }
 }
